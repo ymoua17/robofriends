@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchBox from '../Components/SearchBox/SearchBox';
 import Scroll from '../Components/Scroll/Scroll';
 import CardList from '../Components/CardList/CardList';
+import ErrorBoundary from '../Components/ErrorBoundary/ErrorBoundary'
 import './App.css';
 
 class App extends Component {
@@ -16,7 +17,6 @@ class App extends Component {
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
         .then(users => this.setState({robots : users}));
-        console.log('error');
     }
     onSearchChange = (event) => {
         this.setState({ searchfield: event.target.value })
@@ -31,7 +31,9 @@ class App extends Component {
                 <h1 className='f1'>RoboFriends</h1>
                 <SearchBox searchChange={this.onSearchChange}/>
                 <Scroll>
-                    <CardList robots={filterRobots}/>
+                    <ErrorBoundary>
+                        <CardList robots={filterRobots}/>
+                    </ErrorBoundary>n
                 </Scroll>
             </div>  
         );
