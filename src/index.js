@@ -1,15 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createLogger } from 'redux-logger'; 
+import { createStore, applyMiddleware } from 'redux';
 import './index.css';
 import App from './Containers/App';
 import * as serviceWorker from './serviceWorker';
+import { searchRobots } from './reducers';
 import 'tachyons';
+
+
+//need to create the store for redux
+//the store is the source of all truth, it is an object that stores all the initial state
+const logger = createLogger();
+const store = createStore(searchRobots, applyMiddleware(logger));
 
 ReactDOM.render(
   <React.StrictMode>
-    <div>
-      <App/> 
-    </div>
+    <Provider store={store}>
+        <App/> 
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
